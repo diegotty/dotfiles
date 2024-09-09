@@ -1,0 +1,26 @@
+[mediaplayer]
+command=perl $SCRIPTS/mediaplayer
+INSTANCE=spotify
+interval=5
+signal=10
+
+[wifi]
+command=$SCRIPTS/wifi
+label=wifi:
+INTERFACE=wlp0s20f0u2
+interval=60
+
+[cpu_usage]
+command=perl $SCRIPTS/cpu_usage
+interval=10
+LABEL=CPU 
+
+[disk]
+command=$SCRIPTS/disk
+#LABEL=HOME
+#DIR=$HOME
+interval=30
+
+[date]
+command=date '+%Y-%d-%m %H:%M:%S'
+interval=5
