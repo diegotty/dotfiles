@@ -9,7 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod4
+set $mod Mod1
 
 exec_always feh --bg-scale ~/.config/backgrounds/dystopic.jpg
 exec --no-startup-id picom

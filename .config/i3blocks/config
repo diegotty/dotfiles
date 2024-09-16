@@ -7,7 +7,7 @@ signal=10
 [wifi]
 command=$SCRIPTS/wifi
 label=wifi:
-INTERFACE=wlp0s20f0u2
+INTERFACE=wlp0s20f0u2i2
 interval=60
 
 [cpu_usage]
