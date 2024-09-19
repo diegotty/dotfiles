@@ -1,8 +1,17 @@
 # Created by newuser for 5.9
+export VISUAL=nvim
+export EDITOR=nvim
+export SUDO_EDITOR=nvim
+export HISTFILE=$ZDOTDIR/.zhistory
+export HISTSIZE=10000
+export SAVEHIST=10000
+export XDG_CONFIG_HOME=$HOME/.config
+export WORKON_HOME=$HOME/.virtualenvs
 #vim mode setup
 bindkey -v
 export KEYTIMEOUT=1
 source $ZDOTDIR/cursor_mode
+source /usr/bin/virtualenvwrapper_lazy.sh
 
 #TODO !
 #zstyle ':completion:*' menu select
