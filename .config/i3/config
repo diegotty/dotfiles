@@ -16,7 +16,7 @@ exec_always feh --bg-scale ~/.config/backgrounds/dystopic.jpg
 exec --no-startup-id picom
 exec --no-startup-id redshift
 exec --no-startup-id xcape -e 'Caps_Lock=Escape'
-exec alacritty
+exec kitty
 
 bindsym Print exec flameshot gui -p ~/Images/screenshots
 # Font for window titles. Will also be used by the bar unless a different font
@@ -57,7 +57,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
