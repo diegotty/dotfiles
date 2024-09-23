@@ -4,6 +4,13 @@ INSTANCE=spotify
 interval=5
 signal=10
 
+[battery]
+command=$SCRIPT_DIR/battery
+interval=30
+LABEL=BAT
+#LABEL=⚡
+#BAT_NUMBER=0
+
 [wifi]
 command=$SCRIPTS/wifi
 label=wifi:
