@@ -5,7 +5,7 @@ interval=5
 signal=10
 
 [battery]
-command=$SCRIPT_DIR/battery
+command=perl $SCRIPT_DIR/battery
 interval=30
 LABEL=BAT
 #LABEL=⚡
