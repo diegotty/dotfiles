@@ -5,11 +5,13 @@ interval=5
 signal=10
 
 [battery]
+<<<<<<< HEAD
 command=perl $SCRIPT_DIR/battery
+=======
+command=$SCRIPTS/battery
+>>>>>>> e326d988aac66fa4781d5d5a384ccd03592f10db
 interval=30
 LABEL=BAT
-#LABEL=⚡
-#BAT_NUMBER=0
 
 [wifi]
 command=$SCRIPTS/wifi
