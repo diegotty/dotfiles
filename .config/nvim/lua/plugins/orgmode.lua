@@ -7,7 +7,7 @@ return {
     require("orgmode").setup({
       org_agenda_files = { "~/diego/orgmode/**/*", "~/diego/uni/y2s1/**/*", "~/diego/uni/y2s2/**/*" },
       org_default_notes_file = "~/diego/orgmode/refile.org",
-      org_todo_keywords = { "LECTURE(l)", "TODO(t)", "COULDO(c)", "WORKINGON(w)", "NOTDONE(n)", "DONE(d)" },
+      org_todo_keywords = { "LECTURE(l)", "TODO(t)", "COULDO(c)", "WORKINGON(w)", "|", "NOTDONE(n)", "DONE(d)" },
       org_todo_repeat_to_state = "LECTURE",
       win_split_mode = "auto",
       org_startup_folded = "showeverything",

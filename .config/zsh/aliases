@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-alias shutdown='shutdown now'
 alias snvim='sudoedit'
 alias d="dirs -v"
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
