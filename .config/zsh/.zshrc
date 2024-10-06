@@ -30,6 +30,8 @@ autoload -U compinit; compinit
 _comp_options+=(globdots) #include hidden files
 source $ZDOTDIR/completion.zsh
 
+eval "$(zoxide init zsh)"
+
 # directory stack
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
