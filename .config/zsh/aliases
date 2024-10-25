@@ -7,5 +7,5 @@ alias cd="z"
 #personal
 alias dot="$HOME/dotfiles"
 
-alias serial="arduino-cli serial -p /dev/ttyACM0 -c"
+alias serial="arduino-cli monitor -c"
 alias orario="kitten icat ~/diego/uni/y2s1/orario.jpg"
