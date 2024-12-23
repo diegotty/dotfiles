@@ -7,23 +7,26 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 export XDG_CONFIG_HOME=$HOME/.config
 export WORKON_HOME=$HOME/.virtualenvs
+
+fpath=($HOME/.config/zsh/ $fpath)
+autoload -Uz prompt; prompt
+
 #vim mode setup
 bindkey -v
 export KEYTIMEOUT=1
 source $ZDOTDIR/cursor_mode
 source /usr/bin/virtualenvwrapper_lazy.sh
 
-#TODO !
-#zstyle ':completion:*' menu select
-#zmodload zsh/complist
-#bindkey -M menuselect 'h' vi-backward-char
-#bindkey -M menuselect 'k' vi-up-line-or-history
-#bindkey -M menuselect 'l' vi-forward-char
-#bindkey -M menuselect 'j' vi-down-line-or-history
-
-
 source $ZDOTDIR/aliases
 setopt HIST_SAVE_NO_DUPS
+
+# custom keybinds 4 complist
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
 
 #autocompletions
 autoload -U compinit; compinit
@@ -38,4 +41,13 @@ setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
 
 #prompt (TODO)
-PROMPT=$'%F{white}%~ %B%F{blue}>%f%b '
+#PROMPT=$'%n@%F{white}%~ %B%F{blue}>%f%b '
+
+#git info
+autoload -Uz vcs_info
+precmd() { vcs_info }
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats '%b'
+
+#syntax highlighting
+source $HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
