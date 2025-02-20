@@ -8,4 +8,5 @@ alias cd="z"
 alias dot="$HOME/dotfiles"
 
 alias serial="arduino-cli monitor -c"
-alias orario="kitten icat ~/diego/uni/y2s1/orario.jpg"
+alias orario="kitten icat ~/diego/uni/y2s2/orario.jpg"
+alias ssd="cd /run/media/dmart/sddiego"

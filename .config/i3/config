@@ -14,7 +14,9 @@ set $mod Mod1
 exec_always feh --bg-scale ~/.config/backgrounds/dystopic.jpg
 exec --no-startup-id picom
 exec --no-startup-id redshift
-exec kitty nvim ~/diego/uni/y2s1/EXAMSGRIND.org
+exec --no-startup-id udiskie
+exec kitty nvim
+#exec kitty nvim ~/diego/uni/y2s1/EXAMSGRIND.org
 
 #copy screenshots to clipboard
 bindsym $mod+c exec flameshot gui -r | xclip -selection clipboard -t image/png

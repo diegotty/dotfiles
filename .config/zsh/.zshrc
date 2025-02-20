@@ -15,7 +15,8 @@ autoload -Uz prompt; prompt
 bindkey -v
 export KEYTIMEOUT=1
 source $ZDOTDIR/cursor_mode
-source /usr/bin/virtualenvwrapper_lazy.sh
+# python venv pre-load
+# source /usr/bin/virtualenvwrapper_lazy.sh
 
 source $ZDOTDIR/aliases
 setopt HIST_SAVE_NO_DUPS
