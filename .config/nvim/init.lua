@@ -20,6 +20,7 @@ vim.opt.rtp:prepend(lazypath)
   -- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " " 
 vim.g.maplocalleader ="\\"
+
 -- relative numbers
 vim.opt.number = true
 vim.wo.relativenumber = true
@@ -46,3 +47,17 @@ vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<leader>c', ':noh<CR>')
+
+-- vim.api.nvim_create_user_command("Run", function()
+--   local path = vim.api.nvim_buf_getname(0);
+--   print(path);
+-- end, {})
+--
+vim.keymap.set("n", "<leader>st", function()
+  -- vim.cmd("cd %:p:h")
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd("J")
+  vim.api.nvim_win_set_height(0,10)
+  vim.fn.feedkeys("a")
+end)
