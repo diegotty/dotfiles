@@ -30,14 +30,19 @@ for_window [class="processing-core-PApplet"] floating enable
 no_focus [class="processing-core-PApplet"] 
 
 #scratchpads
-exec "kitty --class kittysp,kittysp"
+bindsym $mod+Shift+p move scratchpad
+bindsym $mod+p scratchpad show
+bindsym $mod+i [class="firefox"] scratchpad show;
+# bindsym $mod+t [class="kittysp"] scratchpad show;
+
+ exec "kitty --class kittysp,kittysp"
+# exec "kitty --class temp,temp -e nvim ~/diego/misc/temp.txt"
+# for_window [class="temp"], move scratchpad
+# bindsym $mod+t [class="temp"] scratchpad show;
+
 # exec "kitty --class kittysp,kittysp -e nvim " 
 for_window [class="kittysp"], move scratchpad
 
-bindsym $mod+Shift+p move scratchpad
-bindsym $mod+p scratchpad show
-# bindsym $mod+b [class="btop"] scratchpad show;
-# bindsym $mod+t [class="kittysp"] scratchpad show;
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
