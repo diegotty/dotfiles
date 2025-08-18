@@ -52,3 +52,6 @@ zstyle ':vcs_info:git:*' formats '%b'
 
 #syntax highlighting
 source $HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
+neofetch
