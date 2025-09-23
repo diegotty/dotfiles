@@ -11,7 +11,7 @@
 
 set $mod Mod1
 
-exec_always feh --bg-scale ~/.config/backgrounds/dystopic.jpg
+exec_always feh --bg-fill ~/.config/backgrounds/wyclef_lauryn_2.jpg
 exec --no-startup-id picom
 exec --no-startup-id redshift
 exec --no-startup-id udiskie
