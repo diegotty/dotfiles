@@ -12,3 +12,4 @@ alias orario="kitten icat ~/diego/uni/y2s2/orario.jpg"
 alias ssd="cd /run/media/dmart/sddiego"
 alias ttp="cd /run/media/dmart/sddiego/sketches_2025; nvim"
 alias run='processing-java --sketch=`pwd` --run &;sleep 4; i3-msg floating enable;'
+alias dsite="nvim ~/diego/projects/website/site"
