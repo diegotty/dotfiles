@@ -8,6 +8,9 @@ return {
       ignore_install = { 'org'},
 			highlight = { enable = true },
 			indent = { enable = true },
+      ensure_installed = {
+        "latex" -- 4 syntax highlighting
+      }
 		})
 	end,
 }
