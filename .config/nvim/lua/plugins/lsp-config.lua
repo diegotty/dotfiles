@@ -18,18 +18,25 @@ return {
 		"neovim/nvim-lspconfig",
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({
+			vim.lsp.config("lua_ls", {
+				capabilities = capabilities
+			})
+      vim.lsp.enable("lua_ls")
+
+			vim.lsp.config("ts_ls", {
 				capabilities = capabilities,
 			})
-			lspconfig.ts_ls.setup({
+      vim.lsp.enable("ts_ls")
+
+			vim.lsp.config("html", {
 				capabilities = capabilities,
 			})
-			lspconfig.html.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.jdtls.setup({})
-			lspconfig.arduino_language_server.setup({
+      vim.lsp.enable("html")
+
+			vim.lsp.config("jdtls", {})
+      vim.lsp.enable("jdtls")
+
+			vim.lsp.config("arduino_language_server", {
 				cmd = {
 					"arduino-language-server",
 					"-clangd",
@@ -43,7 +50,11 @@ return {
 				},
 				capabilities = capabilities,
 			})
-      lspconfig.pyright.setup({})
+      vim.lsp.enable("arduino_language_server")
+
+      vim.lsp.config("pyright",{})
+      vim.lsp.enable("pyright")
+
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
