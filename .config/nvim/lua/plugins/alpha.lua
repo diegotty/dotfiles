@@ -70,7 +70,7 @@ return {
 				{ type = "padding", val = 2 },
 				{
 					type = "text",
-					val = "whatevever your shit is, man, do it",
+					val = "one day i am gonna grow wings",
 					opts = {
 						position = "center",
 					},
