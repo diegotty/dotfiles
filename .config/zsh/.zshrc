@@ -7,6 +7,7 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 export XDG_CONFIG_HOME=$HOME/.config
 export WORKON_HOME=$HOME/.virtualenvs
+export username_cluster=martire_2107804
 
 fpath=($HOME/.config/zsh/ $fpath)
 autoload -Uz prompt; prompt
@@ -55,3 +56,14 @@ source $HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting
 
 
 neofetch
+
+push() {
+    git add .
+    if [ "$1" != "" ] # or better, if [ -n "$1" ]
+    then
+        git commit -m "$1"
+    else
+        git commit -m update
+    fi
+    git push
+}

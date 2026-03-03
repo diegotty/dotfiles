@@ -14,27 +14,31 @@ return {
 			})
 		end,
 	},
+
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
+      local tsserver_path = "/usr/lib/node_modules/typescript/bin/tsserver"
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			vim.lsp.config("lua_ls", {
-				capabilities = capabilities
-			})
       vim.lsp.enable("lua_ls")
+      vim.lsp.config( "ts_ls", {
+        cmd = {tsserver_path, "--stdio"},
+        init_options = {
+          hostInfo = "neovim",
+          provideFormatter = true,
+        },
+        filetypes = { 
+          "javascript", 
+          "javascriptreact", 
+          "typescript", 
+          "typescriptreact" 
+        },
+                name = "tsserver",
+        root_dir = require('lspconfig.util').root_pattern("tsconfig.json", "jsconfig.json", "package.json", ".git"),
+      })
 
-			vim.lsp.config("ts_ls", {
-				capabilities = capabilities,
-			})
       vim.lsp.enable("ts_ls")
-
-			vim.lsp.config("html", {
-				capabilities = capabilities,
-			})
       vim.lsp.enable("html")
-
-			vim.lsp.config("jdtls", {})
-      vim.lsp.enable("jdtls")
 
 			vim.lsp.config("arduino_language_server", {
 				cmd = {
@@ -51,8 +55,6 @@ return {
 				capabilities = capabilities,
 			})
       vim.lsp.enable("arduino_language_server")
-
-      vim.lsp.config("pyright",{})
       vim.lsp.enable("pyright")
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})

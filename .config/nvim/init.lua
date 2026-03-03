@@ -32,6 +32,10 @@ vim.wo.relativenumber = true
 vim.splitright = true
 vim.splitbelow = true
 
+vim.opt.encoding = "utf-8"
+vim.opt.fileencodings = "utf-8, latin1"
+vim.opt.bomb = false
+
 -- highlighting on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
