@@ -14,6 +14,10 @@ set $mod Mod1
 # exec_always feh --bg-fill ~/.config/backgrounds/wyclef_lauryn_2.jpg
 # exec_always feh --bg-fill ~/.config/backgrounds/pino_bg.jpg
 exec_always feh --bg-fill ~/.config/backgrounds/fish.jpg
+
+# autotiling
+# uses [github]nwg-piotr/autotiling
+exec_always --no-startup-id autotiling
 exec --no-startup-id picom
 exec --no-startup-id redshift
 exec --no-startup-id udiskie
