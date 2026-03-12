@@ -47,3 +47,5 @@ vim.g.have_nerd_font = true
 require("keymaps")
 
 require("lazy").setup("plugins")
+vim.cmd("colorscheme ashen")
+
