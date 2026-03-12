@@ -17,4 +17,4 @@ alias testmpi="make clean;make;make run_mpi"
 alias testcu="make clean;make;make run_cuda_local"
 alias vpn="cd ~/downloads/hpc-vpn/; sudo openvpn ~/downloads/hpc-vpn/frontend-hpc-di-UDP4-1194.ovpn"
 alias cluster="ssh $username_cluster@192.168.0.102"
-
+alias sync_notes="sh ~/diego/uni/obsidian_notes/pdf_sync.sh"
