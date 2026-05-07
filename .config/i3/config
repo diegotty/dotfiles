@@ -35,6 +35,9 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 for_window [class="processing-core-PApplet"] floating enable
 no_focus [class="processing-core-PApplet"] 
 
+#4 sfm project
+for_window [title="^sfm$"] floating enable
+
 #scratchpads
 bindsym $mod+Shift+p move scratchpad
 bindsym $mod+p scratchpad show
