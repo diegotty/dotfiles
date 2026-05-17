@@ -67,3 +67,7 @@ push() {
     fi
     git push
 }
+
+jfeh() {
+    feh -. -Z --start-at "$1" >/dev/null 2>&1 &
+}
