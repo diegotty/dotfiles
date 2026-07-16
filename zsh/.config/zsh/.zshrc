@@ -54,8 +54,10 @@ zstyle ':vcs_info:git:*' formats '%b'
 #syntax highlighting
 source $HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+#extending PATH (needed 4 tree-sitter-cli which was installed via cargo)
+export PATH=$PATH:/home/dmart/.cargo/bin
 
-neofetch
+fastfetch
 
 push() {
     git add .

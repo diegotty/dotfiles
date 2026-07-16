@@ -1,0 +1,27 @@
+#ai-made :(
+
+command=$HOME/.config/i3blocks/status
+color=#FFFFFF
+separator=true
+separator_block_width=10
+markup=none
+
+[media]
+interval=3
+
+[wifi]
+interval=10
+
+[cpu]
+interval=5
+min_width=CPU 100%
+
+[disk]
+interval=30
+
+[battery]
+interval=30
+
+[date]
+interval=5
+min_width=Wed 31 Dec 23:59

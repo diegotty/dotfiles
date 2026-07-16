@@ -1,0 +1,251 @@
+# ai-made :(
+set -uo pipefail
+COLOR_NORMAL="#FFFFFFF"
+COLOR_WARN="#FABD2F"
+COLOR_CRIT="#FB4934"
+
+CPU_WARN=70
+CPU_CRIT=90
+DISK_PATH="/"
+DISK_CRIT_FREE=10
+BAT_WARN=30
+BAT_CRIT=15
+MEDIA_MAX_LENGTH=55
+DATE_FORMAT="+%a <%d-%m-%Y-%S> %H:%M:%S"
+
+print_block() {
+    local full=$1
+    local short=${2:-$1}
+    local color=${3:-}
+
+    printf '%s\n%s\n' "$full" "$short"
+    [[ -n $color ]] && printf '%s\n' "$color"
+}
+
+cpu_block() {
+    local _ user nice system idle iowait irq softirq steal guest guest_nice
+    local idle_before total_before idle_after total_after idle_delta total_delta usage color
+
+    read -r _ user nice system idle iowait irq softirq steal guest guest_nice < /proc/stat
+    idle_before=$((idle + iowait))
+    total_before=$((user + nice + system + idle + iowait + irq + softirq + steal))
+
+    sleep 0.2
+
+    read -r _ user nice system idle iowait irq softirq steal guest guest_nice < /proc/stat
+    idle_after=$((idle + iowait))
+    total_after=$((user + nice + system + idle + iowait + irq + softirq + steal))
+
+    idle_delta=$((idle_after - idle_before))
+    total_delta=$((total_after - total_before))
+
+    if (( total_delta > 0 )); then
+        usage=$((100 * (total_delta - idle_delta) / total_delta))
+    else
+        usage=0
+    fi
+
+    color=$COLOR_NORMAL
+    (( usage >= CPU_WARN )) && color=$COLOR_WARN
+    (( usage >= CPU_CRIT )) && color=$COLOR_CRIT
+
+    print_block "CPU ${usage}%" "CPU ${usage}%" "$color"
+}
+
+disk_block() {
+    local available used_percent used free color
+
+    read -r available used_percent < <(
+        df -hP "$DISK_PATH" 2>/dev/null | awk 'NR == 2 { print $4, $5 }'
+    )
+
+    [[ -n ${available:-} && -n ${used_percent:-} ]] || return 0
+
+    used=${used_percent%%%}
+    free=$((100 - used))
+    color=$COLOR_NORMAL
+    (( free < DISK_CRIT_FREE )) && color=$COLOR_CRIT
+
+    print_block "${available}" "${available}" "$color"
+}
+
+find_wifi_interface() {
+    local iface path
+
+    # Prefer the wireless interface carrying the default route.
+    if command -v ip >/dev/null 2>&1; then
+        iface=$(ip route show default 2>/dev/null | awk 'NR == 1 { print $5 }')
+        if [[ -n $iface && -d /sys/class/net/$iface/wireless ]]; then
+            printf '%s\n' "$iface"
+            return 0
+        fi
+    fi
+
+    # Otherwise use the first wireless interface found.
+    for path in /sys/class/net/*/wireless; do
+        [[ -d $path ]] || continue
+        iface=${path%/wireless}
+        printf '%s\n' "${iface##*/}"
+        return 0
+    done
+
+    return 1
+}
+
+wifi_block() {
+    local iface state link ssid dbm quality color
+
+    iface=$(find_wifi_interface) || return 0  # No Wi-Fi hardware: hide block.
+    state=$(<"/sys/class/net/$iface/operstate")
+
+    if [[ $state == down ]]; then
+        print_block "WIFI down" "WIFI down" "$COLOR_CRIT"
+        return 0
+    fi
+
+    if ! command -v iw >/dev/null 2>&1; then
+        print_block "WIFI ${state}" "WIFI ${state}" "$COLOR_NORMAL"
+        return 0
+    fi
+
+    link=$(iw dev "$iface" link 2>/dev/null) || {
+        print_block "WIFI down" "WIFI down" "$COLOR_CRIT"
+        return 0
+    }
+
+    if grep -q '^Not connected' <<< "$link"; then
+        print_block "WIFI down" "WIFI down" "$COLOR_CRIT"
+        return 0
+    fi
+
+    ssid=$(awk -F': ' '/^[[:space:]]*SSID:/ { print $2; exit }' <<< "$link")
+    dbm=$(awk '/^[[:space:]]*signal:/ { print int($2); exit }' <<< "$link")
+
+    if [[ $dbm =~ ^-?[0-9]+$ ]]; then
+        if (( dbm >= -50 )); then
+            quality=100
+        elif (( dbm <= -100 )); then
+            quality=0
+        else
+            quality=$((2 * (dbm + 100)))
+        fi
+    else
+        quality=0
+    fi
+
+    ssid=${ssid:-$iface}
+    (( ${#ssid} > 20 )) && ssid="${ssid:0:19}…"
+
+    color=$COLOR_NORMAL
+    (( quality < 55 )) && color=$COLOR_WARN
+    (( quality < 30 )) && color=$COLOR_CRIT
+
+    print_block "${ssid} ${quality}%" "${quality}%" "$color"
+}
+
+battery_block() {
+    local batteries bat capacity status suffix color
+    shopt -s nullglob
+    batteries=(/sys/class/power_supply/BAT*)
+    shopt -u nullglob
+
+    (( ${#batteries[@]} > 0 )) || return 0  # Desktop: hide block.
+    bat=${batteries[0]}
+    [[ -r $bat/capacity && -r $bat/status ]] || return 0
+
+    capacity=$(<"$bat/capacity")
+    status=$(<"$bat/status")
+
+    case $status in
+        Charging)    suffix=" CHG" ;;
+        Discharging) suffix=" DIS" ;;
+        Full)        suffix=" FULL" ;;
+        *)           suffix="" ;;
+    esac
+
+    color=$COLOR_NORMAL
+    if [[ $status == Discharging ]]; then
+        (( capacity <= BAT_WARN )) && color=$COLOR_WARN
+        (( capacity <= BAT_CRIT )) && color=$COLOR_CRIT
+    fi
+
+    print_block "BAT ${capacity}%${suffix}" "BAT ${capacity}%" "$color"
+    (( capacity <= 5 && status == Discharging )) && return 33
+    return 0
+}
+
+select_player() {
+    local candidate
+    local -a players
+
+    mapfile -t players < <(playerctl --list-all 2>/dev/null | awk '!seen[$0]++')
+    (( ${#players[@]} > 0 )) || return 1
+
+    for candidate in "${players[@]}"; do
+        if [[ $(playerctl --player="$candidate" status 2>/dev/null) == Playing ]]; then
+            printf '%s\n' "$candidate"
+            return 0
+        fi
+    done
+
+    printf '%s\n' "${players[0]}"
+}
+
+media_block() {
+    local player status artist title metadata prefix text
+
+    command -v playerctl >/dev/null 2>&1 || return 0
+    player=$(select_player) || return 0
+
+    case ${BLOCK_BUTTON:-0} in
+        1) playerctl --player="$player" previous >/dev/null 2>&1 || true ;;
+        2) playerctl --player="$player" play-pause >/dev/null 2>&1 || true ;;
+        3) playerctl --player="$player" next >/dev/null 2>&1 || true ;;
+        4) playerctl --player="$player" volume 0.05+ >/dev/null 2>&1 || true ;;
+        5) playerctl --player="$player" volume 0.05- >/dev/null 2>&1 || true ;;
+    esac
+
+    status=$(playerctl --player="$player" status 2>/dev/null) || return 0
+    artist=$(playerctl --player="$player" metadata artist 2>/dev/null | tr '\n' ' ')
+    title=$(playerctl --player="$player" metadata title 2>/dev/null | tr '\n' ' ')
+
+    if [[ -n $artist && -n $title ]]; then
+        metadata="$artist - $title"
+    elif [[ -n $title ]]; then
+        metadata=$title
+    elif [[ -n $artist ]]; then
+        metadata=$artist
+    else
+        metadata=${player%%.*}
+    fi
+
+    case $status in
+        Playing) prefix="[playing]" ;;
+        Paused)  prefix="[paused]" ;;
+        *)       prefix="[stopped]" ;;
+    esac
+
+    text="$prefix $metadata"
+    (( ${#text} > MEDIA_MAX_LENGTH )) && text="${text:0:MEDIA_MAX_LENGTH-1}…"
+
+    print_block "$text" "$prefix"
+}
+
+date_block() {
+    date "$DATE_FORMAT" | tr '[:upper:]' '[:lower:]'
+}
+
+block=${BLOCK_NAME:-${1:-}}
+
+case $block in
+    media)   media_block ;;
+    wifi)    wifi_block ;;
+    cpu)     cpu_block ;;
+    disk)    disk_block ;;
+    battery) battery_block ;;
+    date)    date_block ;;
+    *)
+        printf 'Unknown block: %s\n' "${block:-<unset>}" >&2
+        exit 1
+        ;;
+esac
