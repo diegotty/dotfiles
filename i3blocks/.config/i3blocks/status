@@ -49,7 +49,7 @@ cpu_block() {
     (( usage >= CPU_WARN )) && color=$COLOR_WARN
     (( usage >= CPU_CRIT )) && color=$COLOR_CRIT
 
-    print_block "CPU ${usage}%" "CPU ${usage}%" "$color"
+    print_block "cpu ${usage}%" "cpu ${usage}%" "$color"
 }
 
 disk_block() {

@@ -22,3 +22,5 @@ vim.keymap.set("n", "<leader>st", function()
   vim.api.nvim_win_set_height(0,10)
   vim.fn.feedkeys("a")
 end)
+
+vim.keymap.set('t', '<C-space>', '<C-\\><C-n>', {silent=true})

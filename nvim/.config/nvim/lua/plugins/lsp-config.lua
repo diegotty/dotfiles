@@ -57,6 +57,29 @@ return {
       vim.lsp.enable("arduino_language_server")
       vim.lsp.enable("pyright")
 
+      vim.lsp.config("clangd", {
+          cmd = {
+              "clangd",
+              "--background-index",
+              "--clang-tidy",
+          },
+      
+          filetypes = {
+              "c",
+              "cpp",
+              "objc",
+              "objcpp",
+          },
+      
+          root_markers = {
+              "compile_commands.json",
+              "CMakeLists.txt",
+              ".git",
+          },
+      })
+
+      vim.lsp.enable("clangd")
+
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})

@@ -25,7 +25,7 @@ exec kitty nvim
 #exec kitty nvim ~/diego/uni/y2s1/EXAMSGRIND.org
 
 #copy screenshots to clipboard
-bindsym $mod+c exec flameshot gui -r | xclip -selection clipboard -t image/png
+bindsym $mod+c exec --no-startup-id flameshot gui --clipboard
 
 #4 laptop config
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
@@ -34,6 +34,9 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 #4 processing windows
 for_window [class="processing-core-PApplet"] floating enable
 no_focus [class="processing-core-PApplet"] 
+
+#4 opengl windows
+for_window [title="^learning_openGL$"] floating enable, move position center
 
 #4 sfm project
 for_window [title="^sfm$"] floating enable

@@ -6,9 +6,9 @@ return {
     -- Setup orgmode
     require("orgmode").setup({
       org_agenda_use_time_grid = false,
-      org_agenda_files = { "~/diego/orgmode/**/*", "~/diego/uni/y2s1/**/*", "~/diego/uni/y2s2/**/*", "~/diego/uni/y3s1/**/*", "~/diego/uni/y3s2/**/*"},
-      org_default_notes_file = "~/diego/orgmode/refile.org",
-      org_todo_keywords = { "LECTURE(l)", "TODO(t)", "COULDO(c)", "WORKINGON(w)", "EXAM", "|", "NOTDONE(n)", "DONE(d)" },
+      org_agenda_files = { "~/orgmode/**/*", "~/uni/2.1/**/*", "~/uni/2.2/**/*", "~/uni/3.1/**/*", "~/uni/3.2/**/*", "~/uni/4.1/**/*"},
+      org_default_notes_file = "~/orgmode/refile.org",
+      org_todo_keywords = { "LECTURE(l)", "TODO(t)", "COULDO(c)", "WORKINGON(w)", "EXAM", "|", "NOTDONE(n)", "DONE(d)", "EVENT(e)" },
       org_todo_keyword_faces = {
         EXAM = 'foreground red :weight bold :underline on',
       },
