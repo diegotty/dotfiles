@@ -13,7 +13,7 @@ set $mod Mod1
 
 # exec_always feh --bg-fill ~/.config/backgrounds/wyclef_lauryn_2.jpg
 # exec_always feh --bg-fill ~/.config/backgrounds/pino_bg.jpg
-exec_always feh --bg-fill ~/.config/backgrounds/fish.jpg
+exec_always feh --bg-fill ~/.config/backgrounds/espeakers.gif
 
 # autotiling
 # uses [github]nwg-piotr/autotiling
