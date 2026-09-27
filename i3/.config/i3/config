@@ -10,9 +10,6 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod1
-
-# exec_always feh --bg-fill ~/.config/backgrounds/wyclef_lauryn_2.jpg
-# exec_always feh --bg-fill ~/.config/backgrounds/pino_bg.jpg
 exec_always feh --bg-fill ~/.config/backgrounds/espeakers.gif
 
 # autotiling
@@ -20,15 +17,18 @@ exec_always feh --bg-fill ~/.config/backgrounds/espeakers.gif
 exec_always --no-startup-id autotiling
 exec --no-startup-id picom
 exec --no-startup-id redshift
-exec --no-startup-id udiskie
-#exec kitty nvim ~/diego/uni/y2s1/EXAMSGRIND.org
+exec --no-startup-id udiskie #CDs & similar
 
 #copy screenshots to clipboard
 bindsym $mod+c exec --no-startup-id flameshot gui --clipboard
 
 #4 laptop config
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
 
 #4 processing windows
 for_window [class="processing-core-PApplet"] floating enable
@@ -37,13 +37,9 @@ no_focus [class="processing-core-PApplet"]
 #4 opengl windows
 for_window [title="^learning_openGL$"] floating enable, move position center
 
-#4 sfm project
-for_window [title="^sfm$"] floating enable
-
 #scratchpads
 bindsym $mod+Shift+p move scratchpad
 bindsym $mod+p scratchpad show
-bindsym $mod+i [class="firefox"] scratchpad show;
 # bindsym $mod+t [class="kittysp"] scratchpad show;
 
  exec "kitty --class kittysp,kittysp"
