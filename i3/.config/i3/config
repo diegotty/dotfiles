@@ -21,7 +21,6 @@ exec_always --no-startup-id autotiling
 exec --no-startup-id picom
 exec --no-startup-id redshift
 exec --no-startup-id udiskie
-exec kitty nvim
 #exec kitty nvim ~/diego/uni/y2s1/EXAMSGRIND.org
 
 #copy screenshots to clipboard
